@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple AI Assistant</title>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat"></div>
+        <input type="text" id="user-input" placeholder="Type a command...">
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const chat = document.getElementById('chat');
+        const userInput = document.getElementById('user-input');
+
+        const responses = {
+            'hello': 'Hello! How can I assist you today?',
+            'how are you': 'I am just a computer program, but I am functioning properly. How can I help?',
+            'what is your name': 'I am a simple AI assistant.',
+            'time': getTime,
+            'default': 'Im sorry, I dont understand that command.'
+        };
+
+        function getTime() {
+            const now = new Date();
+            return `The current time is ${now.toLocaleTimeString()}`;
+        }
+
+        function processUserInput() {
+            const userCommand = userInput.value.toLowerCase();
+            const response = responses[userCommand] || responses['default'];
+            displayMessage(userCommand, 'user');
+            displayMessage(response, 'assistant');
+            userInput.value = '';
+        }
+
+        function displayMessage(message, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `[${sender}] ${message}`;
+            chat.appendChild(messageElement);
+        }
+
+        userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                processUserInput();
+            }
+        });
+    </script>
+</body>
+</html>
